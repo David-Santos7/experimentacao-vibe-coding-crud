@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: use_api_user
+          POSTGRES_PASSWORD: ci_password
+          POSTGRES_DB: use_api_dev
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U use_api_user -d use_api_dev"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://use_api_user:ci_password@127.0.0.1:5432/use_api_dev
+      SHADOW_DATABASE_URL: postgresql://use_api_user:ci_password@127.0.0.1:5432/use_api_shadow
+      TEST_DATABASE_URL: postgresql://use_api_user:ci_password@127.0.0.1:5432/use_api_test
+      FRONTEND_URL: http://localhost:5173
+      VITE_API_URL: http://localhost:3333
+      PORT: 3333
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create test and shadow databases
+        env:
+          PGPASSWORD: ci_password
+        run: |
+          psql -h 127.0.0.1 -U use_api_user -d use_api_dev -c 'CREATE DATABASE use_api_test'
+          psql -h 127.0.0.1 -U use_api_user -d use_api_dev -c 'CREATE DATABASE use_api_shadow'
+
+      - name: Generate Prisma Client
+        run: npm exec --workspace use-api -- prisma generate
+
+      - name: Apply development migrations
+        run: npm exec --workspace use-api -- prisma migrate deploy
+
+      - name: Apply test migrations
+        env:
+          DATABASE_URL: postgresql://use_api_user:ci_password@127.0.0.1:5432/use_api_test
+        run: npm exec --workspace use-api -- prisma migrate deploy
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type-check backend
+        run: npm exec --workspace use-api -- tsc --noEmit
+
+      - name: Type-check frontend
+        run: npm exec --workspace use-web -- tsc --noEmit
+
+      - name: Test backend and frontend
+        run: npm test
+
+      - name: Build backend and frontend
+        run: npm run build
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run full-stack E2E
+        run: npm run test:e2e
+
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          if-no-files-found: ignore
