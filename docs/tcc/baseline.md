@@ -13,6 +13,8 @@ Node v24.14.1, npm 11.12.1. Relatório anterior alega 53 testes Vitest; não con
 
 Após backup: `git rm --cached -- use-api` removeu apenas o gitlink do índice; `git add -- use-api` registrou arquivos reais sem apagar fontes. HEAD e histórico do pai permanecem intactos. Clone do commit candidato será validado após registro das correções; a ausência histórica não impede os demais trabalhos autorizados.
 
+Verificação final: main conserva `5baed0a1c5294a457edd40aa294b3c9925a26f92`; branch isolate `stabilize-tcc-artifact` é descendente desse baseline. Índice contém 121 arquivos de use-api e zero gitlinks. Clone novo e validações passaram, registrados em reproducibility.md e gitlink-repair.md. Essas evidências posteriores não alteram os resultados da auditoria original abaixo.
+
 Captura: 2026-10-05T20:29:52-03:00. Mudança: `stabilize-tcc-artifact`. Estado: auditoria concluída; preservação integral e reparação bloqueadas por histórico indisponível.
 
 ## Estado observado

@@ -12,12 +12,12 @@ Implementação iniciada. Revisão autorizada pelo usuário em 2026-10-05: indis
 ## 2. P0 — Reparar aquisição preservando histórico
 
 - [x] 2.1 Ensaiar o snapshot corrigido em clone temporário, preservando bundle e cópia dos fontes locais; registrar histórico indisponível e estratégia de rollback conforme exceção autorizada, sem alegar importação de histórico não recuperado.
-- [ ] 2.2 Consolidar snapshot corrigido em branch local isolada, sem force-push ou alteração do histórico disponível; verificar backup, ausência de gitlink e clone comum contendo ambos os workspaces, registrando exceção histórica autorizada.
-- [ ] 2.3 Documentar aquisição e recuperação em baseline; executar npm ci no clone reparado e registrar resultado e SHA. Criar tag de baseline somente se estado limpo e autorizado.
+- [x] 2.2 Consolidar snapshot corrigido em branch local isolada, sem force-push ou alteração do histórico disponível; verificar backup, ausência de gitlink e clone comum contendo ambos os workspaces, registrando exceção histórica autorizada.
+- [x] 2.3 Documentar aquisição e recuperação em baseline; executar npm ci no clone reparado e registrar resultado e SHA. Criar tag de baseline somente se estado limpo e autorizado.
 
 ## 3. P0 — Versionar contrato e classificação
 
-- [ ] 3.1 Versionar fonte fornecida sem alterá-la e contrato v2 em `docs/tcc/architecture-contract-v2.md`; verificar hash preservado e distinguir histórico, observado e alvo, registrando v1 independente como não localizado conforme exceção autorizada.
+- [x] 3.1 Versionar fonte fornecida sem alterá-la e contrato v2 em `docs/tcc/architecture-contract-v2.md`; verificar hash preservado e distinguir histórico, observado e alvo, registrando v1 independente como não localizado conforme exceção autorizada.
 - [x] 3.2 Criar `docs/tcc/contract-drift.md` registrando SQLite/PostgreSQL, role e URL remota, decisão de manter stack e matriz de dependências; revisar contra os arquivos e fontes reais.
 - [x] 3.3 Criar `docs/tcc/change-classification.md` com referências a commits/diffs para rebuild, refatoração, extensão e correção; marcar fases sem fonte como pendentes e identificar esta estabilização como pós-experimento.
 
@@ -28,8 +28,8 @@ Implementação iniciada. Revisão autorizada pelo usuário em 2026-10-05: indis
 
 ## 5. P0 — Primeira reprodução limpa
 
-- [ ] 5.1 Documentar e preparar PostgreSQL descartável, env de exemplo sem segredo, npm ci, geração e migrations com `prisma7.config.ts` explícito e browser Playwright; verificar que clone limpo executa setup sem arquivos herdados.
-- [ ] 5.2 Executar formatação, lint, TypeScript API/web, testes, build e E2E no clone reparado com guard ativo; registrar comandos/SHA/ambiente/resultados em `docs/tcc/reproducibility.md`, mantendo falhas abertas e distinguindo baseline original do baseline reparado.
+- [x] 5.1 Documentar e preparar PostgreSQL descartável, env de exemplo sem segredo, npm ci, geração e migrations com `prisma7.config.ts` explícito e browser Playwright; verificar que clone limpo executa setup sem arquivos herdados.
+- [x] 5.2 Executar formatação, lint, TypeScript API/web, testes, build e E2E no clone reparado com guard ativo; registrar comandos/SHA/ambiente/resultados em `docs/tcc/reproducibility.md`, mantendo falhas abertas e distinguindo baseline original do baseline reparado.
 
 ## 6. P1 — Consolidar camadas e testar dependências
 
@@ -48,11 +48,11 @@ Implementação iniciada. Revisão autorizada pelo usuário em 2026-10-05: indis
 ## 8. P1 — CI e verificação integrada
 
 - [x] 8.1 Restaurar `.github/workflows/ci.yml` com Node 24, PostgreSQL 18 descartável, geração/migrations seguras, browser e teste arquitetural antes de testes com DB; verificar correspondência com receita local e documentar execução.
-- [ ] 8.2 Executar em clone limpo do commit candidato npm ci, setup Prisma protegido, format:check, lint, TypeScript API e projetos web app/node, test:architecture, npm test, build e test:e2e; registrar SHA e cada resultado real, corrigindo regressões sem ampliar escopo.
+- [x] 8.2 Executar em clone limpo do commit candidato npm ci, setup Prisma protegido, format:check, lint, TypeScript API e projetos web app/node, test:architecture, npm test, build e test:e2e; registrar SHA e cada resultado real, corrigindo regressões sem ampliar escopo.
 - [ ] 8.3 Após autorização de publicação necessária, executar CI para o SHA exato e registrar run ID/URL/data/jobs/status em `docs/tcc/ci-evidence.md`; ausência de acesso mantém NÃO VERIFICADO EM CI e checkbox aberto.
 
 ## 9. Gates acadêmicos e encerramento
 
-- [ ] 9.1 Conferir gates de repositório, contrato, reprodução, arquitetura, segurança e CI com evidências por commit; atualizar documentos pequenos com limitações, sem copiar grandes logs nem atribuir resultados corrigidos ao experimento original.
-- [ ] 9.2 Executar `openspec validate stabilize-tcc-artifact --strict` e revisar correspondência de cada requisito/cenário com resultado verificável; manter tarefas não comprovadas abertas.
+- [x] 9.1 Conferir gates de repositório, contrato, reprodução, arquitetura, segurança e CI com evidências por commit; atualizar documentos pequenos com limitações, sem copiar grandes logs nem atribuir resultados corrigidos ao experimento original.
+- [x] 9.2 Executar `openspec validate stabilize-tcc-artifact --strict` e revisar correspondência de cada requisito/cenário com resultado verificável; manter tarefas não comprovadas abertas.
 - [ ] 9.3 Somente após todos os gates obrigatórios comprovados e solicitação de encerramento, iniciar skill de archive; verificar que specs sincronizadas e registro arquivado conservam evidências e referências históricas.

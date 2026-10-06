@@ -54,3 +54,23 @@ E2E no candidato, fora do sandbox Windows, portas 55335/55174: 5 passed (19.7s),
 Os servidores E2E sob sandbox deixaram teardown pendente, embora testes tenham passado; essa execução não é usada como prova integral. A repetição fora do sandbox é a evidência de conclusão. CI remota continua não verificada.
 
 O primeiro clone real do commit `3472194539bc7e128e22717e9a96eced22cea480` instalou dependências com cache novo e executou geração/migrations, mas format:check falhou em 38 arquivos de cada workspace: checkout Windows usou CRLF enquanto Prettier exigia LF. A correção é `.gitattributes` com eol=lf, excetuando openspec.md como conteúdo binário preservado. A comparação exata de nome do banco também foi endurecida com teste para caminho composto. Esses ajustes exigem validação do commit atualizado; o clone anterior não é declarado aprovado.
+
+## Verificação final do clone real
+
+Commit de código validado: `bc9cc5ee2bfc5f79db09deca7acc5b9cb8a1fc4d`. Clone novo: `C:/Users/Highlander/AppData/Local/Temp/tcc-verified-clone-d3135943da4d492697be0b0b5d5fdab0`. Instalação nova de node_modules via npm ci --prefer-offline --no-audit: 696 pacotes; cache de downloads exclusivo desta reprodução, não cache/dependências do working tree original. Não copiados .env, geração ou builds. Fontes vieram em LF. A rechecagem de checkout antigo não regravou arquivos CRLF; clone novo é a evidência correta.
+
+| Comando | Resultado final |
+| --- | --- |
+| Prisma generate --config prisma7.config.ts | Exit 0, geração limpa |
+| db:test:setup | Exit 0, destino protegido e migrations atualizadas |
+| format:check | Exit 0 nos dois workspaces |
+| lint | Exit 0 nos dois workspaces |
+| typecheck --workspaces | Exit 0 API e web app/node |
+| test:architecture | Exit 0, 6 testes e prova de violações temporárias |
+| npm test | Exit 0, API 58 testes/10 arquivos em 10.97s; web 11 testes/4 arquivos em 37.22s |
+| build | Exit 0 API/web; aviso de tamanho do bundle documentado |
+| test:e2e | Exit 0, 5 passed em 18.8s, portas 55337/55176 e Chromium instalado em diretório temporário exclusivo |
+
+Restrição do ambiente: primeira geração Prisma no sandbox falhou com EPERM ao atualizar cache em AppData/Roaming/Prisma. Repetição autorizada fora do sandbox executou a sequência completa com resultados acima. Os auxiliares Playwright presos foram encerrados por PID/árvore próprios; o servidor preexistente foi preservado. O cluster PostgreSQL descartável foi encerrado após validação, sem apagar o backup ou arquivos do usuário.
+
+O commit posterior `33dd6bd4ab73dbe960ecffbc045847ec396bcb1d` preserva bytes originais de openspec.md; não altera código/testes/configuração de execução em relação ao commit testado (diff dessas áreas vazio). Commits de evidência posteriores apenas registram resultados e tarefas. CI remota permanece NÃO VERIFICADO EM CI; a estabilização científica integral não é declarada concluída com histórico original ausente.

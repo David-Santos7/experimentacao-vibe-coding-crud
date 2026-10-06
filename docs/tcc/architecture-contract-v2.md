@@ -15,4 +15,6 @@ Adaptadores recebem client e casos de uso por injeção; não dependem do single
 
 CRUD público mantido: `/users`, nome/e-mail normalizados, unicidade de e-mail, PATCH parcial e códigos 201/200/204/400/404/409. `role` aceita USER/ADMIN, é obrigatório na criação, opcional no PATCH e não possui default na persistência. Aparece no JSON público; ADMIN não concede privilégios. Não existe autenticação/autorização neste escopo.
 
+O formulário React pré-seleciona USER para criação; isso é um default da interface, não um default do domínio/HTTP/banco. O cliente HTTP deve continuar enviando role explicitamente.
+
 Não objetivos: OpenAPI gerado, code splitting, paginação, rate limiting, autorização, troca de stack, redesign e novo rebuild.
