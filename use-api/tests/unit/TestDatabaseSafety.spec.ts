@@ -17,6 +17,7 @@ describe("test database safety", () => {
     { DATABASE_URL: undefined },
     { TEST_DATABASE_URL: "invalid" },
     { TEST_DATABASE_URL: "postgresql://a:b@localhost/use_api_dev" },
+    { TEST_DATABASE_URL: "postgresql://a:b@localhost/other/use_api_test" },
     { DATABASE_URL: "postgresql://other:password@localhost/use_api_test" },
     { PRODUCTION_DATABASE_URL: safe.TEST_DATABASE_URL },
     { TEST_DATABASE_URL: `${safe.TEST_DATABASE_URL}?schema=public` },

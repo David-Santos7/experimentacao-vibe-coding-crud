@@ -18,7 +18,7 @@ npm exec -- playwright install chromium
 npm run test:e2e
 ```
 
-CI instala Chromium com --with-deps e o seleciona. A reprodução Windows usou Chrome instalado. Nunca fazer reset contra banco existente. Setup testa destino antes de migrate deploy.
+CI instala Chromium com --with-deps e o seleciona. O padrão local também é o Chromium do Playwright; E2E_BROWSER_CHANNEL=chrome permite optar explicitamente por Chrome instalado. As primeiras execuções Windows usaram Chrome instalado; a validação final usa o browser baixado em diretório temporário próprio. Nunca fazer reset contra banco existente. Setup testa destino antes de migrate deploy.
 
 ## Fonte e ambiente
 
@@ -52,3 +52,5 @@ Em `a07bcaedb8be31feb61cfc96a3f95c3b2cc163f7`: geração, migrations, lint, tipo
 E2E no candidato, fora do sandbox Windows, portas 55335/55174: 5 passed (19.7s), exit code 0, encerramento normal. Os cinco cenários também foram executados individualmente pela suíte com dados próprios, sem dependência de outro cenário. Duração Vitest: API 12.28s, web 34.53s. Build web passou com aviso de chunk >500 kB; não aplicar P2 de code splitting.
 
 Os servidores E2E sob sandbox deixaram teardown pendente, embora testes tenham passado; essa execução não é usada como prova integral. A repetição fora do sandbox é a evidência de conclusão. CI remota continua não verificada.
+
+O primeiro clone real do commit `3472194539bc7e128e22717e9a96eced22cea480` instalou dependências com cache novo e executou geração/migrations, mas format:check falhou em 38 arquivos de cada workspace: checkout Windows usou CRLF enquanto Prettier exigia LF. A correção é `.gitattributes` com eol=lf, excetuando openspec.md como conteúdo binário preservado. A comparação exata de nome do banco também foi endurecida com teste para caminho composto. Esses ajustes exigem validação do commit atualizado; o clone anterior não é declarado aprovado.

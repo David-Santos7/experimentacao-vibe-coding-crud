@@ -30,7 +30,7 @@ export function assertSafeTestDatabase(
     );
   }
   const testDestination = destination(testUrl);
-  if (!testDestination.endsWith("/use_api_test")) {
+  if (decodeURIComponent(new URL(testUrl).pathname) !== "/use_api_test") {
     throw new Error(
       "Only use_api_test is permitted for destructive test operations.",
     );
