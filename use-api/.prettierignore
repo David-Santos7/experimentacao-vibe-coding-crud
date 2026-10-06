@@ -1,0 +1,11 @@
+node_modules
+dist
+coverage
+src/generated
+package-lock.json
+.agents
+skills-lock.json
+prisma
+README.md
+RELATORIO_*.md
+src/infrastructure/generated

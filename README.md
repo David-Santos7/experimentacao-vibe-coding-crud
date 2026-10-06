@@ -164,3 +164,8 @@ O workflow `.github/workflows/ci.yml` usa Node.js 24 e PostgreSQL 18, cria banco
 - sem paginação e rate limiting;
 - bundle inicial do frontend possui aviso de tamanho e pode futuramente receber code splitting;
 - o tooling Prisma 7.10.0 mantém vulnerabilidades transitivas documentadas; não foi usado `npm audit fix --force` porque ele propõe downgrade incompatível.
+
+## Estabilização pós-experimento
+
+Consulte docs/tcc/architecture-contract-v2.md para as quatro camadas e a semântica de role, docs/tcc/reproducibility.md para setup seguro e resultados, e docs/tcc/baseline.md para a lacuna histórica registrada. Use npm run typecheck --workspaces e npm run test:architecture. Testes com banco exigem NODE_ENV=test e URLs distintas para desenvolvimento e use_api_test; nunca apontar cleanup ao banco de desenvolvimento.
+

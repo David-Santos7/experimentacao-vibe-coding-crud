@@ -14,7 +14,8 @@
     "lint": "npm run lint --workspaces --if-present",
     "format": "npm run format --workspaces --if-present",
     "format:check": "npm run format:check --workspaces --if-present",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:architecture": "npm run test:architecture --workspace use-api"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",
